@@ -7,87 +7,411 @@
 <meta name="description" content="국민대학교 경영정보학부 1학년 박준혁의 개인 홈페이지">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#f4f5f7; --surface:#ffffff; --ink:#111827; --muted:#5b6475;
-  --line:#dde1e8; --accent:#2f5bea; --accent-ink:#ffffff; --tint:#e6ecff;
+/* ===== 디자인 토큰 ===== */
+/* 기본값: 화이트 톤 */
+:root {
+  color-scheme: light dark;  /* 스크롤바·폼 요소도 테마에 맞춤 */
+  --bg: #f6f7f9;             /* 배경 */
+  --surface: #ffffff;        /* 카드/패널 */
+  --ink: #141821;            /* 본문 글자 */
+  --muted: #5a6273;          /* 보조 글자 */
+  --line: rgba(20, 24, 33, .1);
+  --accent: #3358e0;         /* 단일 액센트 (밝은 배경에서 대비가 충분한 블루) */
+  --accent-ink: #ffffff;     /* 액센트 위에 올라가는 글자 */
+  --glow: 7%;                /* 상단 빛 세기 */
+  --header-h: 64px;
+  --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 }
-@media (prefers-color-scheme:dark){
-  :root{--bg:#0f1420;--surface:#171e2d;--ink:#eef1f7;--muted:#9aa4b8;--line:#28324a;--accent:#7c9bff;--accent-ink:#0f1420;--tint:#1f2a4a}
+
+/* 사용자 기기가 다크 모드면 다크 톤으로 전환 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1017;
+    --surface: #141823;
+    --ink: #eceff5;
+    --muted: #a3abbd;
+    --line: rgba(255, 255, 255, .08);
+    --accent: #8ba4ff;
+    --accent-ink: #0d1017;
+    --glow: 9%;
+  }
 }
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:72px}
-body{font-family:"IBM Plex Sans KR",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.75;font-size:17px;-webkit-font-smoothing:antialiased}
-a{color:inherit}
-:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
-.wrap{max-width:960px;margin:0 auto;padding:0 24px}
 
-/* header */
-header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-header .wrap{display:flex;justify-content:space-between;align-items:center;height:60px}
-.logo{font-weight:700;text-decoration:none;letter-spacing:-.01em}
-nav{display:flex;gap:22px}
-nav a{text-decoration:none;color:var(--muted);font-size:15px;padding:4px 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
-nav a:hover,nav a.on{color:var(--ink);border-color:var(--accent)}
+/* ===== 기본 ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* hero */
-.hero{padding:96px 0 72px}
-.hero p.hi{color:var(--muted);margin-bottom:20px}
-.hero h1{font-size:clamp(34px,6.4vw,68px);line-height:1.2;font-weight:700;letter-spacing:-.035em;max-width:14em}
-.swap{display:inline-block;color:var(--accent);min-width:2.6em;border-bottom:4px solid var(--accent);cursor:pointer;background:none;border-top:0;border-left:0;border-right:0;font:inherit;letter-spacing:inherit}
-.swap span{display:inline-block;animation:in .45s ease}
-@keyframes in{from{opacity:0;transform:translateY(.35em)}to{opacity:1;transform:none}}
-.hero .lead{margin-top:28px;max-width:34em;color:var(--muted);font-size:18px}
-.hint{margin-top:10px;font-size:14px;color:var(--muted)}
-.cta{display:flex;gap:12px;margin-top:36px;flex-wrap:wrap}
-.btn{display:inline-block;padding:12px 22px;border-radius:8px;text-decoration:none;font-weight:500;border:1px solid var(--line);background:var(--surface);cursor:pointer;font:inherit;font-weight:500;color:var(--ink);transition:transform .15s}
-.btn:hover{transform:translateY(-2px)}
-.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-
-/* sections */
-section{padding:72px 0;border-top:1px solid var(--line)}
-h2{font-size:28px;letter-spacing:-.02em;margin-bottom:28px}
-.about{display:grid;grid-template-columns:1fr 1fr;gap:48px}
-.about p+p{margin-top:16px}
-dl{display:grid;grid-template-columns:auto 1fr;gap:12px 24px;align-content:start}
-dt{color:var(--muted)}
-dd{font-weight:500}
-
-/* interests */
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
-.chip{padding:7px 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:15px;cursor:pointer;transition:background .2s}
-.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-.items{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-.item{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px}
-.item h3{font-size:18px;margin-bottom:6px}
-.item p{color:var(--muted);font-size:15px;line-height:1.65}
-.item .tag{display:inline-block;margin-top:12px;padding:2px 10px;background:var(--tint);color:var(--accent);border-radius:6px;font-size:13px}
-.item[hidden]{display:none}
-
-/* timeline */
-.tl{list-style:none;border-left:2px solid var(--line);margin-left:6px}
-.tl li{position:relative;padding:0 0 28px 28px}
-.tl li::before{content:"";position:absolute;left:-7px;top:9px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
-.tl li.now::before{background:var(--accent)}
-.tl time{color:var(--muted);font-size:14px}
-.tl strong{display:block;font-size:18px}
-.tl span{color:var(--muted);font-size:15px}
-
-/* contact */
-.contact{text-align:left}
-.mail{font-size:clamp(20px,4.4vw,38px);font-weight:700;letter-spacing:-.02em;word-break:break-all;text-decoration:none;border-bottom:3px solid var(--accent)}
-.contact p{color:var(--muted);margin-bottom:20px}
-#toast{margin-left:12px;color:var(--accent);font-size:15px;opacity:0;transition:opacity .2s}
-#toast.show{opacity:1}
-footer{padding:32px 0 48px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
-
-@media(max-width:720px){
-  .about{grid-template-columns:1fr;gap:32px}
-  nav{gap:14px}
-  .hero{padding:64px 0 48px}
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 16px);
 }
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+body {
+  font-family: "IBM Plex Sans KR", system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 상단에만 아주 옅은 빛 한 겹 (움직이지 않음) */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 560px;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(55% 60% at 30% 0%, color-mix(in srgb, var(--accent) var(--glow), transparent), transparent 70%);
+}
+
+a { color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.wrap {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ===== 헤더 ===== */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: color-mix(in srgb, var(--bg) 80%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+
+header .wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--header-h);
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 17px;
+  text-decoration: none;
+}
+
+nav { display: flex; gap: 24px; }
+
+nav a {
+  font-size: 15px;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 4px 0;
+  border-bottom: 2px solid transparent;
+  transition: color .2s, border-color .2s;
+}
+
+nav a:hover,
+nav a.on {
+  color: var(--ink);
+  border-color: var(--accent);
+}
+
+/* ===== 히어로 ===== */
+.hero { padding: 112px 0 96px; }
+
+.hero h1 {
+  font-size: clamp(34px, 6vw, 60px);
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -.03em;
+  max-width: 15em;
+}
+
+.hero h1 .point { color: var(--accent); }
+
+/* 눌러서 바뀌는 단어 */
+.swap {
+  display: inline-block;
+  font: inherit;
+  letter-spacing: inherit;
+  color: var(--accent);
+  background: none;
+  border: 0;
+  border-bottom: 3px solid color-mix(in srgb, var(--accent) 50%, transparent);
+  line-height: 1.1;
+  cursor: pointer;
+}
+
+.swap span {
+  display: inline-block;
+  animation: rise .4s ease;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(.3em); }
+  to   { opacity: 1; transform: none; }
+}
+
+.hint {
+  margin-top: 14px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.lead {
+  margin-top: 28px;
+  max-width: 34em;
+  font-size: 18px;
+  color: var(--muted);
+}
+
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 36px;
+}
+
+/* ===== 버튼 ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 22px;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+}
+
+.btn:hover { border-color: color-mix(in srgb, var(--accent) 50%, var(--line)); }
+
+.btn.primary {
+  color: var(--accent-ink);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* 호버 시 액센트를 글자색 쪽으로 살짝 섞어 톤만 바꾼다 (두 테마 공통) */
+.btn.primary:hover { background: color-mix(in srgb, var(--accent) 88%, var(--ink)); }
+
+/* ===== 섹션 공통 ===== */
+section { padding: 96px 0; }
+section + section { border-top: 1px solid var(--line); }
+
+.head { margin-bottom: 36px; }
+
+/* 섹션 번호 라벨 */
+.kicker {
+  display: block;
+  margin-bottom: 8px;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: .12em;
+  color: var(--accent);
+}
+
+h2 {
+  font-size: clamp(26px, 3.6vw, 34px);
+  letter-spacing: -.02em;
+  line-height: 1.3;
+}
+
+/* ===== 소개 ===== */
+.about {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.about p { max-width: 34em; }
+.about p + p { margin-top: 16px; }
+
+.panel {
+  padding: 24px 26px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px 24px;
+}
+
+dt { font-size: 15px; color: var(--muted); }
+dd { font-weight: 500; word-break: break-all; }
+dd a { text-decoration: none; border-bottom: 1px solid var(--line); }
+dd a:hover { border-color: var(--accent); }
+
+/* ===== 관심사 ===== */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.chip {
+  padding: 7px 16px;
+  font: inherit;
+  font-size: 15px;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color .2s, border-color .2s, background .2s;
+}
+
+.chip:hover { color: var(--ink); }
+
+.chip[aria-pressed="true"] {
+  color: var(--accent-ink);
+  background: var(--accent);
+  border-color: var(--accent);
+  font-weight: 500;
+}
+
+.items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  transition: border-color .2s, transform .2s;
+}
+
+.card:hover {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+  transform: translateY(-2px);
+}
+
+.card[hidden] { display: none; }
+.card h3 { font-size: 18px; margin-bottom: 6px; }
+.card p { font-size: 15px; line-height: 1.7; color: var(--muted); }
+
+.tag {
+  display: inline-block;
+  margin: 14px 6px 0 0;
+  padding: 2px 10px;
+  font-size: 13px;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+/* ===== 기록 (타임라인) ===== */
+.tl {
+  list-style: none;
+  margin-left: 6px;
+  border-left: 2px solid var(--line);
+}
+
+.tl li {
+  position: relative;
+  padding: 0 0 32px 28px;
+}
+
+.tl li:last-child { padding-bottom: 0; }
+
+.tl li::before {
+  content: "";
+  position: absolute;
+  left: -7px;
+  top: 9px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--accent);
+}
+
+.tl li.now::before { background: var(--accent); }
+
+.tl time {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.tl strong { display: block; font-size: 18px; }
+.tl span { font-size: 15px; color: var(--muted); }
+
+/* ===== 연락 ===== */
+.contact p {
+  margin-bottom: 20px;
+  color: var(--muted);
+}
+
+.mail {
+  font-size: clamp(20px, 4vw, 32px);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  word-break: break-all;
+  text-decoration: none;
+  border-bottom: 2px solid color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+.mail:hover { border-color: var(--accent); }
+
+#toast {
+  margin-left: 12px;
+  font-size: 15px;
+  color: var(--accent);
+  opacity: 0;
+  transition: opacity .2s;
+}
+
+#toast.show { opacity: 1; }
+
+/* ===== 푸터 ===== */
+footer {
+  padding: 32px 0 48px;
+  font-size: 14px;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+}
+
+/* ===== 스크롤 진입 (짧고 가볍게) ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .5s ease, transform .5s ease;
+}
+
+.reveal.in { opacity: 1; transform: none; }
+
+/* ===== 반응형 ===== */
+@media (max-width: 760px) {
+  .about { grid-template-columns: 1fr; gap: 28px; }
+  nav { gap: 16px; }
+  .hero { padding: 72px 0 64px; }
+  section { padding: 72px 0; }
+}
+
+/* 모션을 줄이고 싶은 사용자 배려 */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .reveal { opacity: 1; transform: none; }
+}
 </style>
 </head>
 <body>
@@ -107,8 +431,7 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:14px;border-top:1px soli
 <main id="top">
   <div class="wrap">
     <div class="hero">
-      <p class="hi">안녕하세요, 국민대학교 경영정보학부 1학년 박준혁입니다.</p>
-      <h1>저는 <button class="swap" id="swap" aria-live="polite" title="눌러서 바꿔보세요"><span>데이터로</span></button><br>비즈니스를 이해하는 방법을 배우고 있습니다.</h1>
+      <h1>저는 <button class="swap" id="swap" aria-live="polite" title="눌러서 바꿔보세요"><span>데이터로</span></button><br>비즈니스를 <span class="point">이해하는 방법</span>을 배우고 있습니다.</h1>
       <p class="hint">밑줄 친 단어를 눌러보세요.</p>
       <p class="lead">경영의 문제를 정보기술로 풀어내는 일에 관심이 있습니다. 이제 막 시작했지만, 배운 것을 직접 만들어 보며 기록해 나가고 있습니다.</p>
       <div class="cta">
@@ -118,26 +441,36 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:14px;border-top:1px soli
     </div>
   </div>
 
+  <!-- 01 소개 -->
   <section id="about">
-    <div class="wrap about">
-      <div>
+    <div class="wrap reveal">
+      <div class="head">
+        <span class="kicker">01 — ABOUT</span>
         <h2>소개</h2>
-        <p>국민대학교 경영정보학부에서 경영학과 정보시스템을 함께 공부하고 있습니다. 숫자와 코드, 그리고 사람의 의사결정이 만나는 지점이 흥미롭습니다.</p>
-        <p>수업에서 배운 개념을 작은 프로젝트로 직접 확인해 보는 것을 좋아합니다. 이 홈페이지도 그 첫걸음입니다.</p>
       </div>
-      <dl>
-        <dt>학교</dt><dd>국민대학교</dd>
-        <dt>전공</dt><dd>경영정보학부</dd>
-        <dt>학년</dt><dd>1학년</dd>
-        <dt>학번</dt><dd>20262077</dd>
-        <dt>이메일</dt><dd><a href="mailto:junhyeok0702@kookmin.ac.kr">junhyeok0702@kookmin.ac.kr</a></dd>
-      </dl>
+      <div class="about">
+        <div>
+          <p>국민대학교 경영정보학부에서 경영학과 정보시스템을 함께 공부하고 있습니다. 숫자와 코드, 그리고 사람의 의사결정이 만나는 지점이 흥미롭습니다.</p>
+          <p>수업에서 배운 개념을 작은 프로젝트로 직접 확인해 보는 것을 좋아합니다. 이 홈페이지도 그 첫걸음입니다.</p>
+        </div>
+        <dl class="panel">
+          <dt>학교</dt><dd>국민대학교</dd>
+          <dt>전공</dt><dd>경영정보학부</dd>
+          <dt>학년</dt><dd>1학년</dd>
+          <dt>학번</dt><dd>20262077</dd>
+          <dt>이메일</dt><dd><a href="mailto:junhyeok0702@kookmin.ac.kr">junhyeok0702@kookmin.ac.kr</a></dd>
+        </dl>
+      </div>
     </div>
   </section>
 
+  <!-- 02 관심사 -->
   <section id="interests">
-    <div class="wrap">
-      <h2>관심사</h2>
+    <div class="wrap reveal">
+      <div class="head">
+        <span class="kicker">02 — INTERESTS</span>
+        <h2>관심사</h2>
+      </div>
       <div class="filters" role="group" aria-label="분야 필터">
         <button class="chip" data-f="all" aria-pressed="true">전체</button>
         <button class="chip" data-f="biz" aria-pressed="false">경영</button>
@@ -145,39 +478,64 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:14px;border-top:1px soli
         <button class="chip" data-f="data" aria-pressed="false">데이터</button>
       </div>
       <div class="items">
-        <article class="item" data-c="biz"><h3>경영 기초</h3><p>조직과 시장이 어떻게 움직이는지, 기업이 어떤 기준으로 결정을 내리는지 배우고 있습니다.</p><span class="tag">경영</span></article>
-        <article class="item" data-c="it"><h3>프로그래밍</h3><p>HTML, CSS, JavaScript로 직접 화면을 만들며 웹의 구조를 익히는 중입니다.</p><span class="tag">정보기술</span></article>
-        <article class="item" data-c="data"><h3>데이터 분석</h3><p>데이터를 읽고 정리해서 근거 있는 결론을 내는 방법에 관심이 많습니다.</p><span class="tag">데이터</span></article>
-        <article class="item" data-c="it biz"><h3>정보시스템</h3><p>기업이 정보시스템으로 업무를 효율화하는 사례를 찾아보고 있습니다.</p><span class="tag">경영</span> <span class="tag">정보기술</span></article>
+        <article class="card" data-c="biz">
+          <h3>경영 기초</h3>
+          <p>조직과 시장이 어떻게 움직이는지, 기업이 어떤 기준으로 결정을 내리는지 배우고 있습니다.</p>
+          <span class="tag">경영</span>
+        </article>
+        <article class="card" data-c="it">
+          <h3>프로그래밍</h3>
+          <p>HTML, CSS, JavaScript로 직접 화면을 만들며 웹의 구조를 익히는 중입니다.</p>
+          <span class="tag">정보기술</span>
+        </article>
+        <article class="card" data-c="data">
+          <h3>데이터 분석</h3>
+          <p>데이터를 읽고 정리해서 근거 있는 결론을 내는 방법에 관심이 많습니다.</p>
+          <span class="tag">데이터</span>
+        </article>
+        <article class="card" data-c="it biz">
+          <h3>정보시스템</h3>
+          <p>기업이 정보시스템으로 업무를 효율화하는 사례를 찾아보고 있습니다.</p>
+          <span class="tag">정보기술</span><span class="tag">경영</span>
+        </article>
       </div>
     </div>
   </section>
 
+  <!-- 03 기록 -->
   <section id="timeline">
-    <div class="wrap">
-      <h2>기록</h2>
+    <div class="wrap reveal">
+      <div class="head">
+        <span class="kicker">03 — TIMELINE</span>
+        <h2>기록</h2>
+      </div>
       <ol class="tl">
-        <li class="now"><time>현재</time><strong>국민대학교 경영정보학부 1학년</strong><span>전공 기초를 쌓고 있습니다.</span></li>
-        <li class="now"><time>지금</time><strong>개인 홈페이지 제작</strong><span>HTML, CSS, JavaScript로 직접 만들었습니다.</span></li>
+        <li class="now"><time>2026 —</time><strong>국민대학교 경영정보학부 1학년</strong><span>전공 기초를 쌓고 있습니다.</span></li>
+        <li><time>2026</time><strong>개인 홈페이지 제작</strong><span>HTML, CSS, JavaScript로 직접 만들었습니다.</span></li>
         <li><time>다음 목표</time><strong>첫 번째 프로젝트 올리기</strong><span>배운 내용을 작은 결과물로 정리해 이곳에 추가할 예정입니다.</span></li>
       </ol>
     </div>
   </section>
 
+  <!-- 04 연락 -->
   <section id="contact">
-    <div class="wrap contact">
-      <h2>연락</h2>
+    <div class="wrap contact reveal">
+      <div class="head">
+        <span class="kicker">04 — CONTACT</span>
+        <h2>연락</h2>
+      </div>
       <p>질문이나 제안이 있다면 편하게 메일을 보내주세요.</p>
       <a class="mail" href="mailto:junhyeok0702@kookmin.ac.kr">junhyeok0702@kookmin.ac.kr</a>
       <div class="cta">
-        <button class="btn" id="copy">이메일 주소 복사</button><span id="toast" role="status"></span>
+        <button class="btn" id="copy">이메일 주소 복사</button>
+        <span id="toast" role="status"></span>
       </div>
     </div>
   </section>
 </main>
 
 <footer>
-  <div class="wrap">© <span id="y"></span> 박준혁. 국민대학교 경영정보학부.</div>
+  <div class="wrap">© <span id="y"></span> 박준혁 · 국민대학교 경영정보학부</div>
 </footer>
 
 <script>
@@ -185,7 +543,7 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:14px;border-top:1px soli
 document.getElementById('y').textContent = new Date().getFullYear();
 
 // 히어로 단어 전환
-const words = ['데이터로','코드로','시스템으로','경영으로'];
+const words = ['데이터로', '코드로', '시스템으로', '경영으로'];
 let wi = 0;
 const swap = document.getElementById('swap');
 swap.addEventListener('click', () => {
@@ -195,19 +553,18 @@ swap.addEventListener('click', () => {
 
 // 관심사 필터
 const chips = document.querySelectorAll('.chip');
-const items = document.querySelectorAll('.item');
+const cards = document.querySelectorAll('.card');
 chips.forEach(chip => chip.addEventListener('click', () => {
   chips.forEach(c => c.setAttribute('aria-pressed', c === chip));
   const f = chip.dataset.f;
-  items.forEach(it => { it.hidden = !(f === 'all' || it.dataset.c.split(' ').includes(f)); });
+  cards.forEach(c => { c.hidden = !(f === 'all' || c.dataset.c.split(' ').includes(f)); });
 }));
 
 // 이메일 복사
 const toast = document.getElementById('toast');
 document.getElementById('copy').addEventListener('click', async () => {
-  const mail = 'junhyeok0702@kookmin.ac.kr';
   try {
-    await navigator.clipboard.writeText(mail);
+    await navigator.clipboard.writeText('junhyeok0702@kookmin.ac.kr');
     toast.textContent = '복사했습니다.';
   } catch (e) {
     toast.textContent = '복사하지 못했습니다. 직접 선택해 주세요.';
@@ -218,12 +575,18 @@ document.getElementById('copy').addEventListener('click', async () => {
 
 // 현재 섹션 메뉴 강조
 const links = document.querySelectorAll('nav a');
-const obs = new IntersectionObserver(es => {
+const navObs = new IntersectionObserver(es => {
   es.forEach(e => {
     if (e.isIntersecting) links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id));
   });
 }, { rootMargin: '-45% 0px -50% 0px' });
-document.querySelectorAll('section').forEach(s => obs.observe(s));
+document.querySelectorAll('section[id]').forEach(s => navObs.observe(s));
+
+// 스크롤 진입: 한 번 보이면 표시하고 관찰 해제
+const revObs = new IntersectionObserver((es, o) => {
+  es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); o.unobserve(e.target); } });
+}, { rootMargin: '0px 0px -10% 0px' });
+document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
 </script>
 </body>
 </html>
