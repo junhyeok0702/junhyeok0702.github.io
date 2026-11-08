@@ -318,6 +318,58 @@ dd a:hover { border-color: var(--accent); }
   border-radius: 6px;
 }
 
+/* ===== 다음 그림 주제 ===== */
+.vote-lead {
+  max-width: 34em;
+  margin-bottom: 24px;
+  color: var(--muted);
+}
+
+.votes {
+  list-style: none;
+  display: grid;
+  gap: 12px;
+  max-width: 560px;
+}
+
+.vote-row {
+  display: grid;
+  grid-template-columns: 96px 1fr 3em;
+  align-items: center;
+  gap: 16px;
+}
+
+.vote-btn { justify-content: center; }
+.vote-btn:disabled { opacity: .6; cursor: wait; }
+
+.bar {
+  height: 10px;
+  background: var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.bar span {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--accent);
+  border-radius: inherit;
+  transition: width .4s ease;
+}
+
+.count {
+  font-family: var(--mono);
+  text-align: right;
+}
+
+.vote-status {
+  min-height: 1.8em;
+  margin-top: 16px;
+  font-size: 15px;
+  color: var(--muted);
+}
+
 /* ===== 기록 (타임라인) ===== */
 .tl {
   list-style: none;
@@ -422,6 +474,7 @@ footer {
     <nav aria-label="주요 메뉴">
       <a href="#about">소개</a>
       <a href="#interests">관심사</a>
+      <a href="#vote">투표</a>
       <a href="#timeline">기록</a>
       <a href="#contact">연락</a>
     </nav>
@@ -502,11 +555,45 @@ footer {
     </div>
   </section>
 
-  <!-- 03 기록 -->
+  <!-- 03 다음 그림 주제 -->
+  <section id="vote">
+    <div class="wrap reveal">
+      <div class="head">
+        <span class="kicker">03 — NEXT DRAWING</span>
+        <h2>다음 그림 주제</h2>
+      </div>
+      <p class="vote-lead">다음에 보고 싶은 그림 주제를 하나 골라 주세요. 고른 주제와 시각만 저장됩니다.</p>
+      <ul class="votes">
+        <li class="vote-row" data-topic="풍경">
+          <button class="btn vote-btn" type="button">풍경</button>
+          <div class="bar" aria-hidden="true"><span></span></div>
+          <span class="count">—</span>
+        </li>
+        <li class="vote-row" data-topic="인물">
+          <button class="btn vote-btn" type="button">인물</button>
+          <div class="bar" aria-hidden="true"><span></span></div>
+          <span class="count">—</span>
+        </li>
+        <li class="vote-row" data-topic="정물">
+          <button class="btn vote-btn" type="button">정물</button>
+          <div class="bar" aria-hidden="true"><span></span></div>
+          <span class="count">—</span>
+        </li>
+        <li class="vote-row" data-topic="추상">
+          <button class="btn vote-btn" type="button">추상</button>
+          <div class="bar" aria-hidden="true"><span></span></div>
+          <span class="count">—</span>
+        </li>
+      </ul>
+      <p class="vote-status" id="vote-status" role="status"></p>
+    </div>
+  </section>
+
+  <!-- 04 기록 -->
   <section id="timeline">
     <div class="wrap reveal">
       <div class="head">
-        <span class="kicker">03 — TIMELINE</span>
+        <span class="kicker">04 — TIMELINE</span>
         <h2>기록</h2>
       </div>
       <ol class="tl">
@@ -517,11 +604,11 @@ footer {
     </div>
   </section>
 
-  <!-- 04 연락 -->
+  <!-- 05 연락 -->
   <section id="contact">
     <div class="wrap contact reveal">
       <div class="head">
-        <span class="kicker">04 — CONTACT</span>
+        <span class="kicker">05 — CONTACT</span>
         <h2>연락</h2>
       </div>
       <p>질문이나 제안이 있다면 편하게 메일을 보내주세요.</p>
@@ -571,6 +658,69 @@ document.getElementById('copy').addEventListener('click', async () => {
   }
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 2000);
+});
+
+// 다음 그림 주제: 횟수 불러오기와 저장 (Netlify 함수 /api/votes 사용)
+const VOTE_API = '/api/votes';
+const voteRows = document.querySelectorAll('.vote-row');
+const voteBtns = document.querySelectorAll('.vote-btn');
+const voteStatus = document.getElementById('vote-status');
+
+function renderCounts(counts) {
+  const nums = Object.values(counts).filter(n => Number.isInteger(n));
+  const total = nums.reduce((a, b) => a + b, 0);
+  voteRows.forEach(row => {
+    const n = counts[row.dataset.topic];
+    const ok = Number.isInteger(n);
+    row.querySelector('.count').textContent = ok ? n : '—';
+    row.querySelector('.bar span').style.width = ok && total ? (n / total * 100) + '%' : '0';
+  });
+}
+
+// 성공하면 true, 실패하면 숫자를 "—"로 바꾸고 false
+async function loadCounts() {
+  try {
+    const res = await fetch(VOTE_API, { cache: 'no-store' });
+    if (!res.ok) throw new Error(res.status);
+    const data = await res.json();
+    if (!data || typeof data.counts !== 'object') throw new Error('bad data');
+    renderCounts(data.counts);
+    return true;
+  } catch (e) {
+    renderCounts({});
+    return false;
+  }
+}
+
+voteRows.forEach(row => {
+  row.querySelector('.vote-btn').addEventListener('click', async () => {
+    voteBtns.forEach(b => { b.disabled = true; });
+    voteStatus.textContent = '기록하는 중…';
+    let saved = false;
+    try {
+      const res = await fetch(VOTE_API, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ topic: row.dataset.topic })
+      });
+      saved = res.ok;
+    } catch (e) {
+      saved = false;
+    }
+    if (saved) {
+      const loaded = await loadCounts();
+      voteStatus.textContent = loaded
+        ? '기록했습니다.'
+        : '기록했지만 반응 수를 불러오지 못했습니다.';
+    } else {
+      voteStatus.textContent = '기록하지 못했어요. 잠시 후 다시 시도해 주세요.';
+    }
+    voteBtns.forEach(b => { b.disabled = false; });
+  });
+});
+
+loadCounts().then(ok => {
+  if (!ok) voteStatus.textContent = '반응 수를 불러오지 못했습니다.';
 });
 
 // 현재 섹션 메뉴 강조

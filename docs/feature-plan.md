@@ -69,4 +69,6 @@ supabase/schema.sql           테이블·뷰·RLS (Supabase SQL Editor에서 실
 ## 진행 상태
 
 - 완료: 배포 준비 (`netlify.toml`, 빌드 스크립트, 함수, 스키마 파일). 로컬 빌드 검사와 가짜 DB로 함수 응답 검사 통과.
-- 남음: Supabase 프로젝트 생성과 `schema.sql` 실행, Netlify 사이트 연결과 환경 변수 입력, `index.html` 화면 구현, 커밋·push, 위 검사 3~7.
+- 완료: Supabase에서 `schema.sql` 실행. SQL Editor 검사 결과 테이블·뷰 2개, RLS 켜짐, 읽기·쓰기 정책 2개, 방문자는 `topic`만 쓰기 가능하고 수정·삭제 불가.
+- 완료: `index.html`에 "03 — NEXT DRAWING" 섹션과 메뉴 "투표" 추가 (기존 기록·연락 번호는 04·05로 변경). 가짜 응답으로 정상·조회 실패·저장 실패·네트워크 끊김·재조회 실패 화면 동작 검사 통과.
+- 남음: 커밋·push, Netlify 사이트 연결과 환경 변수 입력, 위 검사 2~7.
