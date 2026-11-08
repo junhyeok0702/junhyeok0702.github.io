@@ -318,6 +318,44 @@ dd a:hover { border-color: var(--accent); }
   border-radius: 6px;
 }
 
+/* ===== 작품 응원 ===== */
+.works {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.work {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+/* 이미지가 생기면 이 자리에 <img>를 넣는다 */
+.work-thumb {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  margin-bottom: 16px;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: .12em;
+  color: var(--muted);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 18%, var(--surface)), var(--surface));
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.work .tag { align-self: flex-start; margin: 0 0 6px; }
+.work h3 { font-size: 18px; }
+.work-count { margin-top: 8px; font-weight: 600; }
+.work-last { font-size: 14px; color: var(--muted); }
+.cheer-btn { justify-content: center; margin-top: 16px; }
+.cheer-btn:disabled { opacity: .6; cursor: wait; }
+
 /* ===== 다음 그림 주제 ===== */
 .vote-lead {
   max-width: 34em;
@@ -363,7 +401,8 @@ dd a:hover { border-color: var(--accent); }
   text-align: right;
 }
 
-.vote-status {
+.vote-status,
+.cheer-status {
   min-height: 1.8em;
   margin-top: 16px;
   font-size: 15px;
@@ -459,6 +498,12 @@ footer {
   section { padding: 72px 0; }
 }
 
+/* 메뉴가 6개라 좁은 휴대폰에서 넘치지 않게 */
+@media (max-width: 420px) {
+  nav { gap: 12px; }
+  nav a { font-size: 14px; }
+}
+
 /* 모션을 줄이고 싶은 사용자 배려 */
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
@@ -474,6 +519,7 @@ footer {
     <nav aria-label="주요 메뉴">
       <a href="#about">소개</a>
       <a href="#interests">관심사</a>
+      <a href="#works">작품</a>
       <a href="#vote">투표</a>
       <a href="#timeline">기록</a>
       <a href="#contact">연락</a>
@@ -555,11 +601,49 @@ footer {
     </div>
   </section>
 
-  <!-- 03 다음 그림 주제 -->
+  <!-- 03 작품 -->
+  <section id="works">
+    <div class="wrap reveal">
+      <div class="head">
+        <span class="kicker">03 — WORKS</span>
+        <h2>작품</h2>
+      </div>
+      <p class="vote-lead">마음에 드는 작품에 응원을 남겨 주세요. 숫자는 지금까지 쌓인 응원 횟수입니다. 같은 분이 여러 번 누를 수 있습니다.</p>
+      <div class="works">
+        <article class="work" data-work="photo-night">
+          <div class="work-thumb" aria-hidden="true">PHOTO</div>
+          <span class="tag">사진</span>
+          <h3>야경 사진</h3>
+          <p class="work-count">누적 응원 —</p>
+          <p class="work-last">최근 응원: <time class="last">—</time></p>
+          <button class="btn primary cheer-btn" type="button">응원하기</button>
+        </article>
+        <article class="work" data-work="animation-short">
+          <div class="work-thumb" aria-hidden="true">ANIMATION</div>
+          <span class="tag">영상</span>
+          <h3>짧은 애니메이션</h3>
+          <p class="work-count">누적 응원 —</p>
+          <p class="work-last">최근 응원: <time class="last">—</time></p>
+          <button class="btn primary cheer-btn" type="button">응원하기</button>
+        </article>
+        <article class="work" data-work="poster">
+          <div class="work-thumb" aria-hidden="true">POSTER</div>
+          <span class="tag">그림</span>
+          <h3>포스터</h3>
+          <p class="work-count">누적 응원 —</p>
+          <p class="work-last">최근 응원: <time class="last">—</time></p>
+          <button class="btn primary cheer-btn" type="button">응원하기</button>
+        </article>
+      </div>
+      <p class="cheer-status" id="cheer-status" role="status"></p>
+    </div>
+  </section>
+
+  <!-- 04 다음 그림 주제 -->
   <section id="vote">
     <div class="wrap reveal">
       <div class="head">
-        <span class="kicker">03 — NEXT DRAWING</span>
+        <span class="kicker">04 — NEXT DRAWING</span>
         <h2>다음 그림 주제</h2>
       </div>
       <p class="vote-lead">다음에 보고 싶은 그림 주제를 하나 골라 주세요. 고른 주제와 시각만 저장됩니다.</p>
@@ -589,11 +673,11 @@ footer {
     </div>
   </section>
 
-  <!-- 04 기록 -->
+  <!-- 05 기록 -->
   <section id="timeline">
     <div class="wrap reveal">
       <div class="head">
-        <span class="kicker">04 — TIMELINE</span>
+        <span class="kicker">05 — TIMELINE</span>
         <h2>기록</h2>
       </div>
       <ol class="tl">
@@ -604,11 +688,11 @@ footer {
     </div>
   </section>
 
-  <!-- 05 연락 -->
+  <!-- 06 연락 -->
   <section id="contact">
     <div class="wrap contact reveal">
       <div class="head">
-        <span class="kicker">05 — CONTACT</span>
+        <span class="kicker">06 — CONTACT</span>
         <h2>연락</h2>
       </div>
       <p>질문이나 제안이 있다면 편하게 메일을 보내주세요.</p>
@@ -721,6 +805,78 @@ voteRows.forEach(row => {
 
 loadCounts().then(ok => {
   if (!ok) voteStatus.textContent = '반응 수를 불러오지 못했습니다.';
+});
+
+// 작품 응원: 작품별 누적 응원 횟수 불러오기와 저장 (Netlify 함수 /api/cheers 사용)
+const CHEER_API = '/api/cheers';
+const workCards = document.querySelectorAll('.work');
+const cheerBtns = document.querySelectorAll('.cheer-btn');
+const cheerStatus = document.getElementById('cheer-status');
+const cheerTime = new Intl.DateTimeFormat('ko-KR', {
+  month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false
+});
+
+function renderCheers(works) {
+  workCards.forEach(card => {
+    const w = works[card.dataset.work];
+    const ok = !!w && Number.isInteger(w.count);
+    card.querySelector('.work-count').textContent = ok ? '누적 응원 ' + w.count + '회' : '누적 응원 —';
+    const lastEl = card.querySelector('.last');
+    const last = ok && typeof w.last_at === 'string' ? new Date(w.last_at) : null;
+    if (last && !isNaN(last)) {
+      lastEl.textContent = cheerTime.format(last);
+      lastEl.dateTime = last.toISOString();
+    } else {
+      lastEl.textContent = ok ? '아직 없음' : '—';
+      lastEl.removeAttribute('datetime');
+    }
+  });
+}
+
+// 성공하면 true, 실패하면 숫자를 "—"로 바꾸고 false
+async function loadCheers() {
+  try {
+    const res = await fetch(CHEER_API, { cache: 'no-store' });
+    if (!res.ok) throw new Error(res.status);
+    const data = await res.json();
+    if (!data || typeof data.works !== 'object' || data.works === null) throw new Error('bad data');
+    renderCheers(data.works);
+    return true;
+  } catch (e) {
+    renderCheers({});
+    return false;
+  }
+}
+
+workCards.forEach(card => {
+  card.querySelector('.cheer-btn').addEventListener('click', async () => {
+    cheerBtns.forEach(b => { b.disabled = true; });
+    cheerStatus.textContent = '응원을 저장하는 중…';
+    let saved = false;
+    try {
+      const res = await fetch(CHEER_API, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ work_id: card.dataset.work })
+      });
+      saved = res.ok;
+    } catch (e) {
+      saved = false;
+    }
+    if (saved) {
+      const loaded = await loadCheers();
+      cheerStatus.textContent = loaded
+        ? '응원이 저장되었습니다.'
+        : '응원이 저장되었지만 숫자를 불러오지 못했습니다.';
+    } else {
+      cheerStatus.textContent = '응원을 저장하지 못했습니다. 잠시 후 다시 시도해 주세요.';
+    }
+    cheerBtns.forEach(b => { b.disabled = false; });
+  });
+});
+
+loadCheers().then(ok => {
+  if (!ok) cheerStatus.textContent = '응원 수를 불러오지 못했습니다.';
 });
 
 // 현재 섹션 메뉴 강조
