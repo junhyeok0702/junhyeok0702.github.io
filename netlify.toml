@@ -1,0 +1,12 @@
+# Netlify 배포 설정
+# 공개 출력은 dist/ 만 사용한다. 서버 함수는 netlify/functions 에 두고 dist/ 로 복사하지 않는다.
+
+[build]
+  command = "node scripts/build.mjs"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[functions]
+  directory = "netlify/functions"
