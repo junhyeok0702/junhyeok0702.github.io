@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-label="포스터 임시 이미지: 원과 사각형으로 구성한 전시 포스터">
+  <rect width="1200" height="900" fill="#e9e4da"/>
+  <rect x="330" y="50" width="540" height="800" fill="#f7f3ea" stroke="#1d1d1f" stroke-width="4"/>
+  <circle cx="600" cy="330" r="190" fill="#3358e0"/>
+  <rect x="380" y="400" width="250" height="250" fill="#f2b632" opacity=".95"/>
+  <circle cx="720" cy="520" r="90" fill="none" stroke="#1d1d1f" stroke-width="14"/>
+  <rect x="660" y="160" width="140" height="22" fill="#e94b3c"/>
+  <g font-family="system-ui, sans-serif" fill="#1d1d1f">
+    <text x="380" y="720" font-size="64" font-weight="800" letter-spacing="2">SHAPE &amp;</text>
+    <text x="380" y="790" font-size="64" font-weight="800" letter-spacing="2">COLOR</text>
+    <text x="820" y="790" text-anchor="end" font-size="24" opacity=".7">2026</text>
+  </g>
+  <text x="1170" y="870" text-anchor="end" font-family="system-ui, sans-serif" font-size="26" fill="#1d1d1f" opacity=".55">임시 이미지</text>
+</svg>

@@ -8,11 +8,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>
+// 저장된 테마를 그리기 전에 적용 (깜빡임 방지). 기본값은 밝은 화면.
+try { if (localStorage.getItem('theme') === 'dark') document.documentElement.dataset.theme = 'dark'; } catch (e) {}
+</script>
 <style>
 /* ===== 디자인 토큰 ===== */
-/* 기본값: 화이트 톤 */
+/* 기본값: 밝은 화면 (피드백: 어두운 화면이 읽기 불편하다) */
 :root {
-  color-scheme: light dark;  /* 스크롤바·폼 요소도 테마에 맞춤 */
+  color-scheme: light;       /* 스크롤바·폼 요소도 테마에 맞춤 */
   --bg: #f6f7f9;             /* 배경 */
   --surface: #ffffff;        /* 카드/패널 */
   --ink: #141821;            /* 본문 글자 */
@@ -25,18 +29,17 @@
   --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 }
 
-/* 사용자 기기가 다크 모드면 다크 톤으로 전환 */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0d1017;
-    --surface: #141823;
-    --ink: #eceff5;
-    --muted: #a3abbd;
-    --line: rgba(255, 255, 255, .08);
-    --accent: #8ba4ff;
-    --accent-ink: #0d1017;
-    --glow: 9%;
-  }
+/* 방문자가 헤더의 버튼으로 고른 경우에만 어두운 화면 */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #161a23;
+  --surface: #1f2430;
+  --ink: #f1f3f8;
+  --muted: #c0c6d4;
+  --line: rgba(255, 255, 255, .14);
+  --accent: #9db2ff;
+  --accent-ink: #11141b;
+  --glow: 9%;
 }
 
 /* ===== 기본 ===== */
@@ -99,12 +102,44 @@ header .wrap {
 }
 
 .logo {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-shrink: 0;
   font-weight: 700;
-  font-size: 17px;
+  font-size: 20px;
   text-decoration: none;
+  white-space: nowrap;
+}
+
+.logo small {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-width: 0;
 }
 
 nav { display: flex; gap: 24px; }
+
+.theme-btn {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.theme-btn:hover { border-color: var(--accent); }
 
 nav a {
   font-size: 15px;
@@ -122,7 +157,22 @@ nav a.on {
 }
 
 /* ===== 히어로 ===== */
-.hero { padding: 112px 0 96px; }
+.hero { padding: 96px 0 96px; }
+
+/* 누구의 페이지인지 첫 화면에서 바로 보이게 */
+.hello {
+  margin-bottom: 20px;
+  font-size: clamp(18px, 2.4vw, 22px);
+  color: var(--muted);
+}
+
+.hello strong {
+  display: block;
+  margin-top: 2px;
+  font-size: clamp(30px, 4.4vw, 42px);
+  letter-spacing: -.02em;
+  color: var(--ink);
+}
 
 .hero h1 {
   font-size: clamp(34px, 6vw, 60px);
@@ -236,6 +286,8 @@ h2 {
 }
 
 .about p { max-width: 34em; }
+.about .name-line { font-size: 22px; font-weight: 700; }
+.about .name-line span { color: var(--accent); }
 .about p + p { margin-top: 16px; }
 
 .panel {
@@ -334,19 +386,77 @@ dd a:hover { border-color: var(--accent); }
   border-radius: 14px;
 }
 
-/* 이미지가 생기면 이 자리에 <img>를 넣는다 */
+/* 작품 이미지: 누르면 크게 보기 */
 .work-thumb {
-  display: grid;
-  place-items: center;
-  aspect-ratio: 4 / 3;
+  position: relative;
+  display: block;
+  width: 100%;
   margin-bottom: 16px;
-  font-family: var(--mono);
-  font-size: 13px;
-  letter-spacing: .12em;
-  color: var(--muted);
-  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 18%, var(--surface)), var(--surface));
+  padding: 0;
+  overflow: hidden;
+  background: var(--bg);
   border: 1px solid var(--line);
   border-radius: 10px;
+  cursor: zoom-in;
+}
+
+.work-thumb img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  transition: transform .3s ease;
+}
+
+.work-thumb:hover img { transform: scale(1.04); }
+
+.zoom-label {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  padding: 2px 10px;
+  font-size: 13px;
+  color: #fff;
+  background: rgba(0, 0, 0, .55);
+  border-radius: 999px;
+}
+
+/* 크게 보기 창 */
+.viewer {
+  width: min(1100px, 94vw);
+  max-height: 94vh;
+  margin: auto;
+  padding: 0;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.viewer::backdrop { background: rgba(0, 0, 0, .75); }
+
+.viewer img {
+  display: block;
+  width: 100%;
+  max-height: calc(94vh - 72px);
+  object-fit: contain;
+  background: #000;
+}
+
+.viewer-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+}
+
+.viewer-bar .btn { padding: 8px 16px; }
+
+.works-note {
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--muted);
 }
 
 .work .tag { align-self: flex-start; margin: 0 0 6px; }
@@ -494,13 +604,33 @@ footer {
 @media (max-width: 760px) {
   .about { grid-template-columns: 1fr; gap: 28px; }
   nav { gap: 16px; }
-  .hero { padding: 72px 0 64px; }
+  .hero { padding: 64px 0 64px; }
   section { padding: 72px 0; }
+
+  /* 좁은 화면: 이름·테마 버튼 한 줄, 메뉴는 아래 줄에서 옆으로 밀어 보기 */
+  header .wrap {
+    flex-wrap: wrap;
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 4px;
+    row-gap: 4px;
+  }
+  .header-right { display: contents; }
+  .theme-btn { margin-left: auto; }
+  nav {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+  }
+  nav a { flex-shrink: 0; }
+  .logo small { display: none; }
+  html { scroll-padding-top: 116px; }
 }
 
-/* 메뉴가 6개라 좁은 휴대폰에서 넘치지 않게 */
 @media (max-width: 420px) {
-  nav { gap: 12px; }
+  nav { gap: 14px; }
   nav a { font-size: 14px; }
 }
 
@@ -515,21 +645,25 @@ footer {
 
 <header>
   <div class="wrap">
-    <a class="logo" href="#top">박준혁</a>
-    <nav aria-label="주요 메뉴">
-      <a href="#about">소개</a>
-      <a href="#interests">관심사</a>
-      <a href="#works">작품</a>
-      <a href="#vote">투표</a>
-      <a href="#timeline">기록</a>
-      <a href="#contact">연락</a>
-    </nav>
+    <a class="logo" href="#top">박준혁<small>국민대 경영정보학부</small></a>
+    <div class="header-right">
+      <nav aria-label="주요 메뉴">
+        <a href="#about">소개</a>
+        <a href="#interests">관심사</a>
+        <a href="#works">작품</a>
+        <a href="#vote">투표</a>
+        <a href="#timeline">기록</a>
+        <a href="#contact">연락</a>
+      </nav>
+      <button class="theme-btn" id="theme" type="button" aria-pressed="false">어둡게</button>
+    </div>
   </div>
 </header>
 
 <main id="top">
   <div class="wrap">
     <div class="hero">
+      <p class="hello">안녕하세요, 국민대학교 경영정보학부 1학년<strong>박준혁입니다.</strong></p>
       <h1>저는 <button class="swap" id="swap" aria-live="polite" title="눌러서 바꿔보세요"><span>데이터로</span></button><br>비즈니스를 <span class="point">이해하는 방법</span>을 배우고 있습니다.</h1>
       <p class="hint">밑줄 친 단어를 눌러보세요.</p>
       <p class="lead">경영의 문제를 정보기술로 풀어내는 일에 관심이 있습니다. 이제 막 시작했지만, 배운 것을 직접 만들어 보며 기록해 나가고 있습니다.</p>
@@ -549,10 +683,12 @@ footer {
       </div>
       <div class="about">
         <div>
+          <p class="name-line">저는 <span>박준혁</span>입니다.</p>
           <p>국민대학교 경영정보학부에서 경영학과 정보시스템을 함께 공부하고 있습니다. 숫자와 코드, 그리고 사람의 의사결정이 만나는 지점이 흥미롭습니다.</p>
           <p>수업에서 배운 개념을 작은 프로젝트로 직접 확인해 보는 것을 좋아합니다. 이 홈페이지도 그 첫걸음입니다.</p>
         </div>
         <dl class="panel">
+          <dt>이름</dt><dd>박준혁</dd>
           <dt>학교</dt><dd>국민대학교</dd>
           <dt>전공</dt><dd>경영정보학부</dd>
           <dt>학년</dt><dd>1학년</dd>
@@ -611,7 +747,10 @@ footer {
       <p class="vote-lead">마음에 드는 작품에 응원을 남겨 주세요. 숫자는 지금까지 쌓인 응원 횟수입니다. 같은 분이 여러 번 누를 수 있습니다.</p>
       <div class="works">
         <article class="work" data-work="photo-night">
-          <div class="work-thumb" aria-hidden="true">PHOTO</div>
+          <button class="work-thumb" type="button" aria-label="야경 사진 크게 보기">
+            <img src="assets/works/photo-night.svg" alt="야경 사진: 달이 뜬 밤의 도시와 강에 비친 불빛" width="1200" height="900" loading="lazy">
+            <span class="zoom-label" aria-hidden="true">크게 보기</span>
+          </button>
           <span class="tag">사진</span>
           <h3>야경 사진</h3>
           <p class="work-count">누적 응원 —</p>
@@ -619,7 +758,10 @@ footer {
           <button class="btn primary cheer-btn" type="button">응원하기</button>
         </article>
         <article class="work" data-work="animation-short">
-          <div class="work-thumb" aria-hidden="true">ANIMATION</div>
+          <button class="work-thumb" type="button" aria-label="짧은 애니메이션 크게 보기">
+            <img src="assets/works/animation-short.svg" alt="짧은 애니메이션: 공이 튀는 장면을 담은 세 프레임" width="1200" height="900" loading="lazy">
+            <span class="zoom-label" aria-hidden="true">크게 보기</span>
+          </button>
           <span class="tag">영상</span>
           <h3>짧은 애니메이션</h3>
           <p class="work-count">누적 응원 —</p>
@@ -627,7 +769,10 @@ footer {
           <button class="btn primary cheer-btn" type="button">응원하기</button>
         </article>
         <article class="work" data-work="poster">
-          <div class="work-thumb" aria-hidden="true">POSTER</div>
+          <button class="work-thumb" type="button" aria-label="포스터 크게 보기">
+            <img src="assets/works/poster.svg" alt="포스터: 원과 사각형으로 구성한 전시 포스터" width="1200" height="900" loading="lazy">
+            <span class="zoom-label" aria-hidden="true">크게 보기</span>
+          </button>
           <span class="tag">그림</span>
           <h3>포스터</h3>
           <p class="work-count">누적 응원 —</p>
@@ -636,6 +781,7 @@ footer {
         </article>
       </div>
       <p class="cheer-status" id="cheer-status" role="status"></p>
+      <p class="works-note">이미지를 누르면 크게 볼 수 있습니다. 지금 이미지는 실제 작품으로 바꾸기 전의 임시 이미지입니다.</p>
     </div>
   </section>
 
@@ -704,6 +850,15 @@ footer {
     </div>
   </section>
 </main>
+
+<!-- 작품 크게 보기 -->
+<dialog class="viewer" id="viewer" aria-label="작품 크게 보기">
+  <img id="viewer-img" alt="">
+  <div class="viewer-bar">
+    <strong id="viewer-title"></strong>
+    <form method="dialog"><button class="btn" type="submit">닫기</button></form>
+  </div>
+</dialog>
 
 <footer>
   <div class="wrap">© <span id="y"></span> 박준혁 · 국민대학교 경영정보학부</div>
@@ -878,6 +1033,41 @@ workCards.forEach(card => {
 loadCheers().then(ok => {
   if (!ok) cheerStatus.textContent = '응원 수를 불러오지 못했습니다.';
 });
+
+// 작품 크게 보기 (dialog를 지원하지 않는 브라우저는 이미지를 새 탭으로 연다)
+const viewer = document.getElementById('viewer');
+const viewerImg = document.getElementById('viewer-img');
+const viewerTitle = document.getElementById('viewer-title');
+workCards.forEach(card => {
+  const thumb = card.querySelector('.work-thumb');
+  const img = thumb.querySelector('img');
+  thumb.addEventListener('click', () => {
+    if (typeof viewer.showModal !== 'function') { window.open(img.src, '_blank', 'noopener'); return; }
+    viewerImg.src = img.src;
+    viewerImg.alt = img.alt;
+    viewerTitle.textContent = card.querySelector('h3').textContent;
+    viewer.showModal();
+  });
+});
+// 이미지 바깥 어두운 부분을 누르면 닫기
+viewer.addEventListener('click', e => { if (e.target === viewer) viewer.close(); });
+
+// 밝게/어둡게 전환 (고른 값을 이 기기에 기억)
+const themeBtn = document.getElementById('theme');
+function syncThemeBtn() {
+  const dark = document.documentElement.dataset.theme === 'dark';
+  themeBtn.textContent = dark ? '밝게' : '어둡게';
+  themeBtn.setAttribute('aria-pressed', dark);
+  themeBtn.setAttribute('aria-label', dark ? '밝은 화면으로 바꾸기' : '어두운 화면으로 바꾸기');
+}
+themeBtn.addEventListener('click', () => {
+  const dark = document.documentElement.dataset.theme !== 'dark';
+  if (dark) document.documentElement.dataset.theme = 'dark';
+  else delete document.documentElement.dataset.theme;
+  try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
+  syncThemeBtn();
+});
+syncThemeBtn();
 
 // 현재 섹션 메뉴 강조
 const links = document.querySelectorAll('nav a');

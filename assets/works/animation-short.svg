@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-label="짧은 애니메이션 임시 이미지: 공이 튀는 장면을 담은 필름 프레임">
+  <rect width="1200" height="900" fill="#fff4e3"/>
+  <rect x="0" y="150" width="1200" height="600" fill="#20232f"/>
+  <g fill="#fff4e3">
+    <rect x="30" y="175" width="40" height="28" rx="5"/><rect x="130" y="175" width="40" height="28" rx="5"/>
+    <rect x="230" y="175" width="40" height="28" rx="5"/><rect x="330" y="175" width="40" height="28" rx="5"/>
+    <rect x="430" y="175" width="40" height="28" rx="5"/><rect x="530" y="175" width="40" height="28" rx="5"/>
+    <rect x="630" y="175" width="40" height="28" rx="5"/><rect x="730" y="175" width="40" height="28" rx="5"/>
+    <rect x="830" y="175" width="40" height="28" rx="5"/><rect x="930" y="175" width="40" height="28" rx="5"/>
+    <rect x="1030" y="175" width="40" height="28" rx="5"/><rect x="1130" y="175" width="40" height="28" rx="5"/>
+    <rect x="30" y="697" width="40" height="28" rx="5"/><rect x="130" y="697" width="40" height="28" rx="5"/>
+    <rect x="230" y="697" width="40" height="28" rx="5"/><rect x="330" y="697" width="40" height="28" rx="5"/>
+    <rect x="430" y="697" width="40" height="28" rx="5"/><rect x="530" y="697" width="40" height="28" rx="5"/>
+    <rect x="630" y="697" width="40" height="28" rx="5"/><rect x="730" y="697" width="40" height="28" rx="5"/>
+    <rect x="830" y="697" width="40" height="28" rx="5"/><rect x="930" y="697" width="40" height="28" rx="5"/>
+    <rect x="1030" y="697" width="40" height="28" rx="5"/><rect x="1130" y="697" width="40" height="28" rx="5"/>
+  </g>
+  <g>
+    <rect x="40" y="230" width="360" height="440" rx="8" fill="#bfe3ff"/>
+    <rect x="420" y="230" width="360" height="440" rx="8" fill="#bfe3ff"/>
+    <rect x="800" y="230" width="360" height="440" rx="8" fill="#bfe3ff"/>
+    <rect x="40" y="600" width="360" height="70" fill="#7cc576"/>
+    <rect x="420" y="600" width="360" height="70" fill="#7cc576"/>
+    <rect x="800" y="600" width="360" height="70" fill="#7cc576"/>
+  </g>
+  <circle cx="220" cy="320" r="50" fill="#f2545b"/>
+  <ellipse cx="220" cy="603" rx="40" ry="8" fill="#000" opacity=".12"/>
+  <ellipse cx="600" cy="572" rx="68" ry="34" fill="#f2545b"/>
+  <ellipse cx="600" cy="603" rx="60" ry="10" fill="#000" opacity=".2"/>
+  <circle cx="980" cy="400" r="50" fill="#f2545b"/>
+  <ellipse cx="980" cy="603" rx="34" ry="7" fill="#000" opacity=".12"/>
+  <g stroke="#f2545b" stroke-width="6" stroke-linecap="round" opacity=".5" fill="none">
+    <path d="M220 380 v60"/><path d="M200 390 v40"/><path d="M240 390 v40"/>
+    <path d="M960 460 l-20 40"/><path d="M1000 460 l20 40"/>
+  </g>
+  <g font-family="ui-monospace, Menlo, Consolas, monospace" font-size="24" fill="#20232f">
+    <text x="56" y="262">01</text><text x="436" y="262">02</text><text x="816" y="262">03</text>
+  </g>
+  <text x="600" y="100" text-anchor="middle" font-family="system-ui, sans-serif" font-size="44" font-weight="700" fill="#20232f">BOUNCE</text>
+  <text x="1170" y="870" text-anchor="end" font-family="system-ui, sans-serif" font-size="26" fill="#20232f" opacity=".6">임시 이미지</text>
+</svg>

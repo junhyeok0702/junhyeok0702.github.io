@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-label="야경 사진 임시 이미지: 달이 뜬 밤의 도시와 강에 비친 불빛">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0b1330"/>
+      <stop offset=".6" stop-color="#27346b"/>
+      <stop offset="1" stop-color="#e3866a"/>
+    </linearGradient>
+    <linearGradient id="river" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1a2147"/>
+      <stop offset="1" stop-color="#070b1d"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="620" fill="url(#sky)"/>
+  <g fill="#fff" opacity=".8">
+    <circle cx="120" cy="90" r="2"/><circle cx="310" cy="160" r="1.6"/><circle cx="470" cy="70" r="2.2"/>
+    <circle cx="640" cy="130" r="1.4"/><circle cx="760" cy="60" r="1.8"/><circle cx="1080" cy="150" r="2"/>
+    <circle cx="210" cy="230" r="1.4"/><circle cx="560" cy="210" r="1.6"/>
+  </g>
+  <circle cx="930" cy="170" r="70" fill="#fdf2c8"/>
+  <circle cx="955" cy="155" r="70" fill="#22306a" opacity=".35"/>
+  <g fill="#10173a">
+    <rect x="0" y="430" width="110" height="190"/><rect x="100" y="360" width="90" height="260"/>
+    <rect x="185" y="300" width="120" height="320"/><rect x="300" y="400" width="80" height="220"/>
+    <rect x="375" y="250" width="110" height="370"/><rect x="480" y="340" width="95" height="280"/>
+    <rect x="570" y="200" width="70" height="420"/><rect x="600" y="160" width="10" height="45"/>
+    <rect x="640" y="320" width="130" height="300"/><rect x="765" y="390" width="90" height="230"/>
+    <rect x="850" y="280" width="120" height="340"/><rect x="965" y="370" width="100" height="250"/>
+    <rect x="1060" y="320" width="140" height="300"/>
+  </g>
+  <g fill="#ffd27a">
+    <rect x="205" y="330" width="14" height="18"/><rect x="245" y="330" width="14" height="18"/><rect x="265" y="390" width="14" height="18"/>
+    <rect x="225" y="450" width="14" height="18"/><rect x="395" y="280" width="14" height="18"/><rect x="435" y="340" width="14" height="18"/>
+    <rect x="455" y="420" width="14" height="18"/><rect x="415" y="500" width="14" height="18"/><rect x="585" y="240" width="12" height="16"/>
+    <rect x="610" y="320" width="12" height="16"/><rect x="590" y="430" width="12" height="16"/><rect x="665" y="360" width="14" height="18"/>
+    <rect x="725" y="410" width="14" height="18"/><rect x="705" y="490" width="14" height="18"/><rect x="870" y="310" width="14" height="18"/>
+    <rect x="930" y="370" width="14" height="18"/><rect x="890" y="460" width="14" height="18"/><rect x="1085" y="350" width="14" height="18"/>
+    <rect x="1145" y="410" width="14" height="18"/><rect x="1105" y="490" width="14" height="18"/><rect x="120" y="400" width="12" height="16"/>
+    <rect x="500" y="380" width="12" height="16"/><rect x="990" y="410" width="12" height="16"/>
+  </g>
+  <rect y="620" width="1200" height="280" fill="url(#river)"/>
+  <g fill="#ffd27a" opacity=".35">
+    <rect x="200" y="650" width="70" height="4"/><rect x="230" y="680" width="40" height="3"/>
+    <rect x="390" y="660" width="90" height="4"/><rect x="420" y="700" width="50" height="3"/>
+    <rect x="660" y="655" width="80" height="4"/><rect x="690" y="690" width="40" height="3"/>
+    <rect x="870" y="665" width="90" height="4"/><rect x="1080" y="650" width="80" height="4"/>
+  </g>
+  <rect x="880" y="700" width="100" height="6" fill="#fdf2c8" opacity=".5"/>
+  <rect x="900" y="730" width="60" height="4" fill="#fdf2c8" opacity=".35"/>
+  <text x="1170" y="870" text-anchor="end" font-family="system-ui, sans-serif" font-size="26" fill="#fff" opacity=".7">임시 이미지</text>
+</svg>
