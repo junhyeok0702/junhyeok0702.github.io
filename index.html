@@ -519,6 +519,9 @@ dd a:hover { border-color: var(--accent); }
   color: var(--muted);
 }
 
+.vote-status a,
+.cheer-status a { color: var(--accent); font-weight: 600; }
+
 /* ===== 기록 (타임라인) ===== */
 .tl {
   list-style: none;
@@ -746,13 +749,14 @@ footer {
       </div>
       <p class="vote-lead">마음에 드는 작품에 응원을 남겨 주세요. 숫자는 지금까지 쌓인 응원 횟수입니다. 같은 분이 여러 번 누를 수 있습니다.</p>
       <div class="works">
+        <!-- data-work 값은 DB의 작품 이름이라 바꾸지 않는다 (supabase/cheers.sql 의 check 조건) -->
         <article class="work" data-work="photo-night">
-          <button class="work-thumb" type="button" aria-label="야경 사진 크게 보기">
-            <img src="assets/works/photo-night.svg" alt="야경 사진: 달이 뜬 밤의 도시와 강에 비친 불빛" width="1200" height="900" loading="lazy">
+          <button class="work-thumb" type="button" aria-label="고양이 사진 크게 보기">
+            <img src="assets/works/kmu_cat.jpeg" alt="고양이 사진: 나무 밑동 옆 은행잎이 떨어진 풀밭에 햇볕을 받으며 웅크려 앉은 고등어 무늬와 흰 털의 고양이" width="2934" height="3912" loading="lazy">
             <span class="zoom-label" aria-hidden="true">크게 보기</span>
           </button>
           <span class="tag">사진</span>
-          <h3>야경 사진</h3>
+          <h3>고양이 사진</h3>
           <p class="work-count">누적 응원 —</p>
           <p class="work-last">최근 응원: <time class="last">—</time></p>
           <button class="btn primary cheer-btn" type="button">응원하기</button>
@@ -781,7 +785,7 @@ footer {
         </article>
       </div>
       <p class="cheer-status" id="cheer-status" role="status"></p>
-      <p class="works-note">이미지를 누르면 크게 볼 수 있습니다. 지금 이미지는 실제 작품으로 바꾸기 전의 임시 이미지입니다.</p>
+      <p class="works-note">이미지를 누르면 크게 볼 수 있습니다. 고양이 사진은 실제 작품이고, 나머지 두 이미지는 실제 작품으로 바꾸기 전의 임시 이미지입니다.</p>
     </div>
   </section>
 
@@ -899,6 +903,19 @@ document.getElementById('copy').addEventListener('click', async () => {
   setTimeout(() => toast.classList.remove('show'), 2000);
 });
 
+// GitHub Pages 주소에는 서버 함수가 없어서 응원·투표를 쓸 수 없다.
+// 그 주소에서는 요청을 보내지 않고, Netlify 주소로 가는 안내를 보여 준다.
+const LIVE_SITE = 'https://visionary-chaja-afbc3e.netlify.app/';
+const NO_API = location.hostname.endsWith('.github.io');
+
+function showLiveSiteNotice(statusEl, buttons, hash) {
+  buttons.forEach(b => { b.disabled = true; });
+  const a = document.createElement('a');
+  a.href = LIVE_SITE + hash;
+  a.textContent = 'Netlify 주소에서 이용하기';
+  statusEl.replaceChildren('이 주소에서는 이 기능을 쓸 수 없습니다. ', a);
+}
+
 // 다음 그림 주제: 횟수 불러오기와 저장 (Netlify 함수 /api/votes 사용)
 const VOTE_API = '/api/votes';
 const voteRows = document.querySelectorAll('.vote-row');
@@ -958,9 +975,13 @@ voteRows.forEach(row => {
   });
 });
 
-loadCounts().then(ok => {
-  if (!ok) voteStatus.textContent = '반응 수를 불러오지 못했습니다.';
-});
+if (NO_API) {
+  showLiveSiteNotice(voteStatus, voteBtns, '#vote');
+} else {
+  loadCounts().then(ok => {
+    if (!ok) voteStatus.textContent = '반응 수를 불러오지 못했습니다.';
+  });
+}
 
 // 작품 응원: 작품별 누적 응원 횟수 불러오기와 저장 (Netlify 함수 /api/cheers 사용)
 const CHEER_API = '/api/cheers';
@@ -1030,9 +1051,13 @@ workCards.forEach(card => {
   });
 });
 
-loadCheers().then(ok => {
-  if (!ok) cheerStatus.textContent = '응원 수를 불러오지 못했습니다.';
-});
+if (NO_API) {
+  showLiveSiteNotice(cheerStatus, cheerBtns, '#works');
+} else {
+  loadCheers().then(ok => {
+    if (!ok) cheerStatus.textContent = '응원 수를 불러오지 못했습니다.';
+  });
+}
 
 // 작품 크게 보기 (dialog를 지원하지 않는 브라우저는 이미지를 새 탭으로 연다)
 const viewer = document.getElementById('viewer');
