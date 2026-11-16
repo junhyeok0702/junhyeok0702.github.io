@@ -403,6 +403,7 @@ dd a:hover { border-color: var(--accent); }
 .work-thumb img {
   display: block;
   width: 100%;
+  height: auto; /* img의 height 속성값을 쓰지 않고 4:3 비율로 맞춘다 */
   aspect-ratio: 4 / 3;
   object-fit: cover;
   transition: transform .3s ease;
