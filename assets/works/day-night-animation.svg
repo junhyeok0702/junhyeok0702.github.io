@@ -1,0 +1,207 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320" role="img" aria-label="언덕 위 작은 집에 낮과 밤이 반복되는 애니메이션">
+  <title>낮과 밤</title>
+  <defs>
+    <linearGradient id="dn-sky-day" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4fb0f0"/>
+      <stop offset="1" stop-color="#c4e9ff"/>
+    </linearGradient>
+    <linearGradient id="dn-sky-dusk" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#46448f"/>
+      <stop offset="0.55" stop-color="#e2697c"/>
+      <stop offset="1" stop-color="#ffc46e"/>
+    </linearGradient>
+    <linearGradient id="dn-sky-night" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0a0f33"/>
+      <stop offset="1" stop-color="#34428a"/>
+    </linearGradient>
+    <radialGradient id="dn-sun-glow">
+      <stop offset="0" stop-color="#fff6b8" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#fff6b8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="dn-moon-glow">
+      <stop offset="0" stop-color="#e8f0ff" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#e8f0ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="dn-lamp-glow">
+      <stop offset="0" stop-color="#ffd667" stop-opacity="0.65"/>
+      <stop offset="1" stop-color="#ffd667" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="dn-meteor-tail" gradientUnits="userSpaceOnUse" x1="262" y1="26" x2="300" y2="45">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#ffffff"/>
+    </linearGradient>
+    <clipPath id="dn-frame">
+      <rect width="480" height="320" rx="16"/>
+    </clipPath>
+  </defs>
+  <style>
+    .dn-day    { animation: dn-day 10s ease-in-out infinite; }
+    .dn-dusk   { animation: dn-dusk 10s ease-in-out infinite; }
+    .dn-stars  { animation: dn-stars 10s ease-in-out infinite; }
+    .dn-lamp   { animation: dn-lamp 10s ease-in-out infinite; }
+    .dn-clouds { animation: dn-clouds 10s ease-in-out infinite; }
+    .dn-orbit  { transform-origin: 240px 270px; animation: dn-spin 10s linear infinite; }
+    .dn-moon   { transform-origin: 240px 470px; animation: dn-spin 10s linear infinite reverse; }
+    .dn-rays   { transform-origin: 240px 70px; animation: dn-pulse 1.6s ease-in-out infinite alternate; }
+    .dn-tw     { animation: dn-tw 2.4s ease-in-out infinite; }
+    .dn-tw:nth-child(2n) { animation-duration: 1.7s; animation-delay: -0.8s; }
+    .dn-tw:nth-child(3n) { animation-duration: 3.2s; animation-delay: -1.5s; }
+    .dn-meteor { animation: dn-meteor 10s linear infinite; }
+    .dn-c1     { animation: dn-drift 26s linear -6s infinite; }
+    .dn-c2     { animation: dn-drift 38s linear -22s infinite; }
+    .dn-tree   { transform-origin: 100px 280px; animation: dn-sway 3.2s ease-in-out infinite alternate; }
+    .dn-smoke  { transform-origin: 375px 212px; animation: dn-smoke 3s ease-out infinite; }
+    .dn-s2     { animation-delay: -1s; }
+    .dn-s3     { animation-delay: -2s; }
+    .dn-far    { animation: dn-far 10s ease-in-out infinite; }
+    .dn-mid    { animation: dn-mid 10s ease-in-out infinite; }
+    .dn-near   { animation: dn-near 10s ease-in-out infinite; }
+    .dn-leaf   { animation: dn-leaf 10s ease-in-out infinite; }
+    .dn-wood   { animation: dn-wood 10s ease-in-out infinite; }
+    .dn-body   { animation: dn-body 10s ease-in-out infinite; }
+    .dn-roof   { animation: dn-roof 10s ease-in-out infinite; }
+    .dn-chim   { animation: dn-chim 10s ease-in-out infinite; }
+
+    @keyframes dn-spin   { to { transform: rotate(360deg); } }
+    @keyframes dn-pulse  { from { transform: scale(0.92); } to { transform: scale(1.08); } }
+    @keyframes dn-tw     { 50% { opacity: 0.25; } }
+    @keyframes dn-day    { 0%, 16%, 84%, 100% { opacity: 1; } 25%, 75% { opacity: 0; } }
+    @keyframes dn-dusk   { 0%, 25%, 75%, 100% { opacity: 1; } 34%, 66% { opacity: 0; } }
+    @keyframes dn-stars  { 0%, 27%, 73%, 100% { opacity: 0; } 37%, 63% { opacity: 1; } }
+    @keyframes dn-lamp   { 0%, 19%, 81%, 100% { opacity: 0; } 27%, 73% { opacity: 1; } }
+    @keyframes dn-clouds { 0%, 16%, 84%, 100% { opacity: 0.95; } 34%, 66% { opacity: 0.25; } }
+    @keyframes dn-meteor {
+      0%, 47% { opacity: 0; transform: translate(0, 0); }
+      48% { opacity: 1; }
+      54%, 100% { opacity: 0; transform: translate(130px, 65px); }
+    }
+    @keyframes dn-drift  { from { transform: translateX(-120px); } to { transform: translateX(560px); } }
+    @keyframes dn-sway   { from { transform: rotate(-1.8deg); } to { transform: rotate(1.8deg); } }
+    @keyframes dn-smoke {
+      0%   { opacity: 0; transform: translate(0, 0) scale(0.5); }
+      25%  { opacity: 0.65; }
+      100% { opacity: 0; transform: translate(-14px, -44px) scale(1.7); }
+    }
+    @keyframes dn-far  { 0%, 16%, 84%, 100% { fill: #a6dc9a; } 25%, 75% { fill: #b77580; } 34%, 66% { fill: #26365e; } }
+    @keyframes dn-mid  { 0%, 16%, 84%, 100% { fill: #7cc472; } 25%, 75% { fill: #8e5670; } 34%, 66% { fill: #1d2b50; } }
+    @keyframes dn-near { 0%, 16%, 84%, 100% { fill: #57ad5d; } 25%, 75% { fill: #5f3b5c; } 34%, 66% { fill: #142040; } }
+    @keyframes dn-leaf { 0%, 16%, 84%, 100% { fill: #3f9a4f; } 25%, 75% { fill: #4a3150; } 34%, 66% { fill: #1c3a4a; } }
+    @keyframes dn-wood { 0%, 16%, 84%, 100% { fill: #8a5a3b; } 25%, 75% { fill: #6b4038; } 34%, 66% { fill: #2a2238; } }
+    @keyframes dn-body { 0%, 16%, 84%, 100% { fill: #f7e8cf; } 25%, 75% { fill: #f0b393; } 34%, 66% { fill: #4a5580; } }
+    @keyframes dn-roof { 0%, 16%, 84%, 100% { fill: #e05d50; } 25%, 75% { fill: #a8344a; } 34%, 66% { fill: #3a2d55; } }
+    @keyframes dn-chim { 0%, 16%, 84%, 100% { fill: #b84a40; } 25%, 75% { fill: #7f2d43; } 34%, 66% { fill: #2d2445; } }
+  </style>
+
+  <g clip-path="url(#dn-frame)">
+    <!-- 하늘: 밤 위에 노을, 그 위에 낮 레이어를 겹쳐 투명도로 전환 -->
+    <rect width="480" height="320" fill="url(#dn-sky-night)"/>
+    <rect class="dn-dusk" width="480" height="320" fill="url(#dn-sky-dusk)"/>
+    <rect class="dn-day" width="480" height="320" fill="url(#dn-sky-day)"/>
+
+    <!-- 별 -->
+    <g class="dn-stars" fill="#ffffff" opacity="0">
+      <circle class="dn-tw" cx="40" cy="44" r="1.6"/>
+      <circle class="dn-tw" cx="98" cy="70" r="1.2"/>
+      <path class="dn-tw" d="M150 29l1.2 3.8 3.8 1.2-3.8 1.2-1.2 3.8-1.2-3.8-3.8-1.2 3.8-1.2z"/>
+      <circle class="dn-tw" cx="196" cy="26" r="1.3"/>
+      <circle class="dn-tw" cx="205" cy="128" r="1.1"/>
+      <circle class="dn-tw" cx="292" cy="52" r="1.6"/>
+      <circle class="dn-tw" cx="338" cy="104" r="1.2"/>
+      <path class="dn-tw" d="M412 31l1.2 3.8 3.8 1.2-3.8 1.2-1.2 3.8-1.2-3.8-3.8-1.2 3.8-1.2z"/>
+      <circle class="dn-tw" cx="452" cy="74" r="1.5"/>
+      <circle class="dn-tw" cx="128" cy="150" r="1"/>
+      <path class="dn-tw" d="M70 99l1.2 3.8 3.8 1.2-3.8 1.2-1.2 3.8-1.2-3.8-3.8-1.2 3.8-1.2z"/>
+      <circle class="dn-tw" cx="262" cy="160" r="1.1"/>
+      <circle class="dn-tw" cx="392" cy="150" r="1.3"/>
+      <circle class="dn-tw" cx="24" cy="132" r="1.1"/>
+      <circle class="dn-tw" cx="455" cy="160" r="1"/>
+    </g>
+
+    <!-- 별똥별 -->
+    <path class="dn-meteor" d="M262 26L300 45" stroke="url(#dn-meteor-tail)" stroke-width="2.5" stroke-linecap="round" opacity="0"/>
+
+    <!-- 해와 달: 한 축을 중심으로 함께 회전 -->
+    <g class="dn-orbit">
+      <g>
+        <circle cx="240" cy="70" r="48" fill="url(#dn-sun-glow)"/>
+        <path class="dn-rays" d="M240 40V30M261.2 48.8l7.1-7.1M270 70h10M261.2 91.2l7.1 7.1M240 100v10M218.8 91.2l-7.1 7.1M210 70h-10M218.8 48.8l-7.1-7.1" fill="none" stroke="#ffd34d" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="240" cy="70" r="22" fill="#ffd84d" stroke="#ffbf1f" stroke-width="3"/>
+      </g>
+      <g class="dn-moon">
+        <circle cx="240" cy="470" r="40" fill="url(#dn-moon-glow)"/>
+        <circle cx="240" cy="470" r="20" fill="#f5f2dc"/>
+        <circle cx="233" cy="464" r="4" fill="#dedac0"/>
+        <circle cx="247" cy="476" r="3" fill="#dedac0"/>
+        <circle cx="246" cy="462" r="2" fill="#dedac0"/>
+      </g>
+    </g>
+
+    <!-- 구름 -->
+    <g class="dn-clouds" fill="#ffffff" opacity="0.95">
+      <g transform="translate(0 56)">
+        <g class="dn-c1">
+          <rect y="18" width="96" height="24" rx="12"/>
+          <circle cx="30" cy="22" r="16"/>
+          <circle cx="54" cy="16" r="21"/>
+          <circle cx="76" cy="26" r="13"/>
+        </g>
+      </g>
+      <g transform="translate(0 112)">
+        <g class="dn-c2">
+          <g transform="scale(0.7)">
+            <rect y="18" width="96" height="24" rx="12"/>
+            <circle cx="30" cy="22" r="16"/>
+            <circle cx="54" cy="16" r="21"/>
+            <circle cx="76" cy="26" r="13"/>
+          </g>
+        </g>
+      </g>
+    </g>
+
+    <!-- 언덕 -->
+    <path class="dn-far" d="M0 214C60 186 140 190 210 214S330 226 400 220S460 214 480 216V320H0Z" fill="#a6dc9a"/>
+    <path class="dn-mid" d="M0 250C80 226 150 228 220 248S360 232 480 240V320H0Z" fill="#7cc472"/>
+
+    <!-- 나무 -->
+    <g class="dn-tree">
+      <rect class="dn-wood" x="96" y="250" width="8" height="32" rx="2" fill="#8a5a3b"/>
+      <g class="dn-leaf" fill="#3f9a4f">
+        <circle cx="100" cy="238" r="19"/>
+        <circle cx="85" cy="250" r="13"/>
+        <circle cx="115" cy="250" r="13"/>
+      </g>
+    </g>
+
+    <!-- 집 -->
+    <rect class="dn-chim" x="370" y="222" width="10" height="24" fill="#b84a40"/>
+    <rect class="dn-roof" x="368" y="218" width="14" height="5" rx="1.5" fill="#e05d50"/>
+    <rect class="dn-body" x="330" y="248" width="60" height="44" fill="#f7e8cf"/>
+    <path class="dn-roof" d="M322 252 360 216 398 252Z" fill="#e05d50"/>
+    <rect class="dn-wood" x="340" y="266" width="14" height="26" rx="2" fill="#8a5a3b"/>
+    <circle cx="350.5" cy="280" r="1.3" fill="#f3c969"/>
+    <rect x="364" y="258" width="16" height="16" rx="2" fill="#9cc3e6"/>
+
+    <!-- 앞쪽 땅과 덤불 -->
+    <path class="dn-near" d="M0 286Q120 268 240 282T480 278V320H0Z" fill="#57ad5d"/>
+    <g class="dn-leaf" fill="#3f9a4f">
+      <circle cx="414" cy="284" r="9"/>
+      <circle cx="427" cy="281" r="11"/>
+      <circle cx="440" cy="286" r="7"/>
+    </g>
+
+    <!-- 창문 불빛 -->
+    <g class="dn-lamp" opacity="0">
+      <circle cx="372" cy="266" r="30" fill="url(#dn-lamp-glow)"/>
+      <rect x="364" y="258" width="16" height="16" rx="2" fill="#ffd667"/>
+    </g>
+    <rect class="dn-body" x="371" y="258" width="2" height="16" fill="#f7e8cf"/>
+    <rect class="dn-body" x="364" y="265" width="16" height="2" fill="#f7e8cf"/>
+
+    <!-- 굴뚝 연기 -->
+    <g fill="#ffffff">
+      <circle class="dn-smoke" cx="375" cy="212" r="5" opacity="0"/>
+      <circle class="dn-smoke dn-s2" cx="375" cy="212" r="5" opacity="0"/>
+      <circle class="dn-smoke dn-s3" cx="375" cy="212" r="5" opacity="0"/>
+    </g>
+  </g>
+</svg>
